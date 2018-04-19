@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>RPG Hero creator - {% block title %}{% endblock %}</title>
+    {% block header %}{% endblock %}
+</head>
+<body>
+    <div class="page-header">
+        <img src="/static/pictures/logo.gif" alt="Logo" name="logo">
+        <br>
+        <a href='/warhammer/hero_creation/'>Create a hero</a>
+        <a href='/warhammer/heroes/'>Your characters</a>
+        <a href='/user_login/'>Login</a>
+        <a href='/add_user/'>Register</a>
+        <a href='/user_logout/'>Logout</a>
+        <h1></h1>
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+<div id="footer">
+</div>
+<link rel="stylesheet" type="text/css" href="{% static 'css/warhammer.css' %}" />
+</body>
+</html>

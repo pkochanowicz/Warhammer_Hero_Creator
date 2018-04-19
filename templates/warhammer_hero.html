@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ hero.name }}
+{% endblock %}
+{% block content %}
+    <head>
+    <title>RPG Hero creator -
+    Warhammer hero creation
+</title>
+
+</head>
+<body>
+    <div id="content">
+
+    <form action="" method="post">
+    <div class="right-side">
+        <img src="/static/portraits/warhammer/{{ hero.race }}/{{ hero.gender }}/{{ hero.portrait }}.jpg" alt="Hero Portrait" id="id_portrait" name="id_portrait">
+    </div>
+    <div class=character>
+        <table>
+            <th colspan="2" class=category_header>CHARACTER </th>
+            <tr><th><label for="id_name">Hero name:</label></th><td>{{ hero.name }}</td></tr>
+<tr><th><label for="id_race">Race:</label></th><td>{{ hero.race }}</td></tr>
+<tr><th><label for="id_gender">Gender:</label></th><td>{{ hero.gender }}</td></tr>
+<tr><th><label for="id_current_career">Current career:</label></th><td>{{ hero.current_career }}</td></tr>
+        </table>
+    </div>
+    <br>
+    <div class="character-personal-details">
+        <table>
+            <th colspan="2" class=category_header>PERSONAL DETAILS
+<tr><th><label for="id_previous_careers">Previous careers:</label></th><td>{{ hero.previous_careers}}</td></tr>
+<tr><th><label for="id_age">Age:</label></th><td>{{ hero.age }}</td></tr>
+<tr><th><label for="id_eye_color">Eye color:</label></th><td>{{ hero.eye_color }}</td></tr>
+<tr><th><label for="id_hair_color">Hair color:</label></th><td>{{ hero.hair_color }}</td></tr>
+<tr><th><label for="id_weight">Weight:</label></th><td>{{ hero.weight }}</td></tr>
+<tr><th><label for="id_height">Height:</label></th><td>{{ hero.height }}</td></tr>
+<tr><th><label for="id_star_sign">Star sign:</label></th><td>{{ hero.star_sign }}</td></tr>
+<tr><th><label for="id_number_of_siblings">Number of siblings:</label></th><td>{{ hero.number_of_siblings }}</td></tr>
+<tr><th><label for="id_birthplace">Birthplace:</label></th><td>{{ hero.birthplace }}</td></tr>
+<tr><th><label for="id_distinguishing_marks">Distinguishing marks:</label></th><td>{{ hero.distinguishing_marks }}</td></tr>
+        </table>
+    </div>
+    <br>
+    <div class="character-profile-table">
+        <table >
+            <th colspan="9" class=category_header>CHARACTER PROFILE</th>
+            <tr>
+                <td>Main</td><td>WS</td><td>BS</td><td>S</td><td>T</td><td>Ag</td><td>Int</td><td>WP</td><td>Fel</td>
+            </tr>
+            <tr>
+                <td class="no-border">Starting</td>
+                <td>{{ hero.weapon_skill }}</td>
+                <td>{{ hero.ballistic_skill }}</td>
+                <td>{{ hero.strength }}</td>
+                <td>{{ hero.toughness }}</td>
+                <td>{{ hero.agility }}</td>
+                <td>{{ hero.intelligence }}</td>
+                <td>{{ hero.will_power }}</td>
+                <td>{{ hero.fellowship }}</td>
+            </tr>
+            <tr>
+                <td class="no-border">Advance</td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td>
+            </tr>
+            <tr>
+                <td class="no-border">Current</td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td>
+            </tr>
+            <tr>
+                <td>Secondary</td><td>A</td><td>W</td><td>SB</td><td>TB</td><td>M</td><td>Mag</td><td>IP</td><td>FP</td>
+            </tr>
+            <tr>
+                <td class="no-border">Starting</td>
+                <td>{{ hero.attacks }}</td>
+                <td>{{ hero.wounds }}</td>
+                <td>{{ hero.strength_bonus }}</td>
+                <td>{{ hero.toughness_bonus }}</td>
+                <td>{{ hero.movement }}</td>
+                <td>{{ hero.magic }}</td>
+                <td>{{ hero.insanity_points }}</td>
+                <td>{{ hero.fate_points }}</td>
+            </tr>
+            </tr>
+                        <tr>
+                <td class="no-border">Advance</td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td>
+            </tr>
+            <tr>
+                <td class="no-border">Current</td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td><td><input type="number"/></td>
+                <td><input type="number"/></td>
+            </tr>
+        </table>
+    </div>
+    </form>
+    <link rel="stylesheet" type="text/css" href="/static/css/warhammer.css" />
+{% endblock %}

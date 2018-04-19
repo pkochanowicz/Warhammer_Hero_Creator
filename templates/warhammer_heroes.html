@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Search your characters
+{% endblock %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form}}
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <ul>
+    {% for hero in heroes%}
+        <li><a href='/warhammer/hero/{{ hero.id }}'>{{ hero.name }}</a> - {{ hero.race }} {{ hero.current_career }} -
+            <a href='/warhammer/hero/delete/{{ hero.id }}'>Delete</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

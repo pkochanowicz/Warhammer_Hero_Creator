@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Warhammer hero creation
+{% endblock %}
+{% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
+    <div class="right-side">
+        <img src="{% static "portraits/warhammer/human/male/1.jpg" %}" alt="Hero Portrait" id="id_portrait" name="id_portrait">
+        <button id="portrait_left_button" type=button>Left</button>
+        <input type="hidden" name="portrait_number" value="1" id="portrait_number">
+        <button id="portrait_right_button" type=button>Right</button>
+        <br>
+        <input type="submit" value="Save">
+    </div>
+    <div class="left-side">
+        <div class=character>
+            <table>
+                <th colspan="2" class=category_header>CHARACTER</th>
+                {{ character_form.as_table}}
+            </table>
+        </div>
+        <br>
+        <div class="character-personal-details">
+            <table>
+                <th colspan="2" class=category_header>PERSONAL DETAILS
+                    <button	id="personal_details_roll_button" type=button>Roll dices</button></th>
+                {{ personal_details_form.as_table}}
+            </table>
+        </div>
+        <br>
+        <div class="character-profile-table">
+            <table >
+                <th colspan="9" class=category_header>CHARACTER PROFILE
+                    <button	id="character_profile_roll_button" type=button>Roll dices</button></th>
+                <tr>
+                    <td>Main</td><td>WS</td><td>BS</td><td>S</td><td>T</td><td>Ag</td><td>Int</td><td>WP</td><td>Fel</td>
+                </tr>
+                <tr>
+                    <td class="no-border">Starting</td><td>{{ character_profile_form.weapon_skill }}</td>
+                    <td>{{ character_profile_form.ballistic_skill }}</td>
+                    <td>{{ character_profile_form.strength }}</td><td>{{ character_profile_form.toughness }}</td>
+                    <td>{{ character_profile_form.agility }}</td><td>{{ character_profile_form.intelligence }}</td>
+                    <td>{{ character_profile_form.will_power }}</td><td>{{ character_profile_form.fellowship }}</td>
+                </tr>
+                            <tr>
+                    <td class="no-border">Advance</td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td>
+                </tr>
+                <tr>
+                    <td class="no-border">Current</td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td>
+                </tr>
+                <tr>
+                    <td>Secondary</td><td>A</td><td>W</td><td>SB</td><td>TB</td><td>M</td><td>Mag</td><td>IP</td><td>FP</td>
+                </tr>
+                <tr>
+                    <td class="no-border">Starting</td><td>{{ character_profile_form.attacks }}</td>
+                    <td>{{ character_profile_form.wounds }}</td>
+                    <td>{{ character_profile_form.strength_bonus }}</td><td>{{ character_profile_form.toughness_bonus }}</td>
+                    <td>{{ character_profile_form.movement }}</td><td>{{ character_profile_form.magic }}</td>
+                    <td>{{ character_profile_form.insanity_points }}</td><td>{{ character_profile_form.fate_points }}</td>
+                </tr>
+                </tr>
+                            <tr>
+                    <td class="no-border">Advance</td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td>
+                </tr>
+                <tr>
+                    <td class="no-border">Current</td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td><td><input type="number"/></td>
+                    <td><input type="number"/></td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </form>
+    <script src="{% static 'js/warhammer_hero_creation.js'%}"></script>
+{% endblock %}
