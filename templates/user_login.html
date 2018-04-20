@@ -4,11 +4,14 @@
     Login
 {% endblock %}
 {% block content %}
+<h3>Login:</h3>
 <form action="user_login" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Login">
 </form>
+    <br>
+    You need to login in order to acess to the most of the site.
 {{ message }}
 {% endblock %}
     <head>

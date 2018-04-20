@@ -1,8 +1,29 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator, validate_email
 from .models import Hero
 
 # warhammer hero creation forms
+
+
+def	validate_age(value):
+    if value < 16 or value > 125:
+        raise ValidationError("Wrong age")
+
+
+def	validate_weight(value):
+    if value < 30 or value > 120:
+        raise ValidationError("Wrong weight")
+
+
+def	validate_height(value):
+    if value < 80 or value > 190:
+        raise ValidationError("Wrong height")
+
+
+def	validate_positive(value):
+    if value < 0:
+        raise ValidationError("Must be a positive number")
 
 
 class HeroCreationCharacterForm(forms.Form):
@@ -18,13 +39,13 @@ class HeroCreationCharacterForm(forms.Form):
 
 class HeroCreationPersonalDetailsForm(forms.Form):
     previous_careers = forms.CharField(label='Previous careers', max_length=32, required=False)
-    age = forms.IntegerField(label="Age", validators=[MinValueValidator(14, message="14 is minimal")], required=False)
+    age = forms.IntegerField(label="Age", validators=[validate_age], required=False)
     eye_color = forms.CharField(label='Eye color', max_length=16, required=False)
     hair_color = forms.CharField(label='Hair color', max_length=16, required=False)
-    weight = forms.IntegerField(label='Weight', required=False)
-    height = forms.IntegerField(label='Height', required=False)
+    weight = forms.IntegerField(label='Weight', validators=[validate_weight], required=False)
+    height = forms.IntegerField(label='Height', validators=[validate_height], required=False)
     star_sign = forms.CharField(label='Star sign', max_length=32, required=False)
-    number_of_siblings = forms.IntegerField(label='Number of siblings', required=False)
+    number_of_siblings = forms.IntegerField(label='Number of siblings', validators=[validate_positive], required=False)
     birthplace = forms.CharField(label='Birthplace', max_length=32, required=False)
     distinguishing_marks = forms.CharField(label="Distinguishing marks", max_length=32, required=False)
 

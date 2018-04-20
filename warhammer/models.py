@@ -5,9 +5,9 @@ import os
 
 RACES = (
     ("human", "human"),
-    ("human", "dwarf"),
-    ("human", "elf"),
-    ("human", "halfling"),
+    ("dwarf", "dwarf"),
+    ("elf", "elf"),
+    ("halfling", "halfling"),
 )
 
 GENDERS = (

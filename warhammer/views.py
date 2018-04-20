@@ -19,9 +19,16 @@ class HeroCreationView(View):
         character_form = HeroCreationCharacterForm
         personal_details_form = HeroCreationPersonalDetailsForm
         character_profile_form = HeroCreationCharacterProfileForm
+        race = 'human'
+        gender = 'male'
+        portrait = '1'
         return render(request, 'warhammer_hero_creation.html', {"character_form": character_form,
                                                                 "personal_details_form": personal_details_form,
-                                                                "character_profile_form": character_profile_form})
+                                                                "character_profile_form": character_profile_form,
+                                                                "race": race,
+                                                                "gender": gender,
+                                                                "portrait": portrait
+                                                                })
 
     @method_decorator(login_required)
     def post(self, request):
@@ -101,9 +108,15 @@ class HeroCreationView(View):
             new_hero.save()
             return redirect("/warhammer/hero/{}".format(new_hero.id))
         else:
+            race = request.POST.get("race")
+            gender = request.POST.get("gender")
+            portrait = request.POST.get("portrait_number")
             return render(request, 'warhammer_hero_creation.html', {"character_form": character_form,
                                                                     "personal_details_form": personal_details_form,
-                                                                    "character_profile_form": character_profile_form})
+                                                                    "character_profile_form": character_profile_form,
+                                                                    "race": race,
+                                                                    "gender": gender,
+                                                                    "portrait": portrait})
 
 
 class HeroView(View):
@@ -128,10 +141,12 @@ class HeroesSearchAndView(View):
             name = form.cleaned_data['name']
             race = form.cleaned_data['race']
             gender = form.cleaned_data['gender']
+            print(race, gender)
             current_career = form.cleaned_data['current_career']
             user_heroes = Hero.objects.filter(name__icontains=name, race__icontains=race,
-                                              gender__icontains=gender, current_career__icontains=current_career,
-                                              user=request.user)
+                                              current_career__icontains=current_career, user=request.user)
+            if gender != "":
+                user_heroes = user_heroes.filter(gender=gender)
             return render(request, "warhammer_heroes.html", {'heroes': user_heroes,
                                                              "form": form})
 
@@ -159,7 +174,7 @@ class UserLoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('warhammer/hero_creation/')
+                return redirect('/warhammer/hero_creation/')
             else:
                 return render(request, 'user_login.html', {'form': form,
                                                            'message': 'Wrong login or password'})

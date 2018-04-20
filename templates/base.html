@@ -6,16 +6,18 @@
     {% block header %}{% endblock %}
 </head>
 <body>
-    <div class="page-header">
-        <img src="/static/pictures/logo.gif" alt="Logo" name="logo">
-        <br>
+        <img src="/static/pictures/logo.gif" alt="Logo" name="logo" id="logo">
+        <h4>
+        <a href='/'>Main site</a>
         <a href='/warhammer/hero_creation/'>Create a hero</a>
         <a href='/warhammer/heroes/'>Your characters</a>
-        <a href='/user_login/'>Login</a>
-        <a href='/add_user/'>Register</a>
-        <a href='/user_logout/'>Logout</a>
-        <h1></h1>
-    </div>
+            {% if user.id == None %}
+                <a href='/user_login/'>Login</a>
+                <a href='/add_user/'>Register</a>
+            {% else %}
+                <a href='/user_logout/'>Logout</a>
+            {% endif %}
+        </h4>
     <div id="content">
         {% block content %}{% endblock %}
     </div>

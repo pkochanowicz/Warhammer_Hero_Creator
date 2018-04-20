@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var gender_downroll = document.getElementById("id_gender");
     var selected_gender = "male";
     var personal_details_inputs = document.querySelectorAll('.character-personal-details > table > tbody > tr > td > input');
+    var personal_details_roll_button = document.querySelectorAll("personal_details_roll_button");
     var character_profile_inputs = document.querySelectorAll('.character-profile-table > table > tbody > tr > td > input');
     var character_profile_roll_button = document.getElementById("character_profile_roll_button");
     var portrait_number_html = document.getElementById("portrait_number");
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         portrait.src = "/static/portraits/warhammer/" + selected_race +
             "/" + selected_gender + "/" + portrait_number + ".jpg";
         portrait_number_html.value = portrait_number;
+        sessionStorage.setItem('portrait_number', portrait_number);
     });
     portrait_right_button.addEventListener("click", function (e) {
         portrait_number += 1;
@@ -47,10 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
         portrait_number_html.value = portrait_number;
+        sessionStorage.setItem('portrait_number', portrait_number);
     });
     //race and gender selector change
-    race_downroll.addEventListener("click", function (e) {
+    race_downroll.addEventListener("change", function (e) {
         selected_race = race_downroll.options[race_downroll.selectedIndex].text.toLowerCase();
+        sessionStorage.setItem('selected_race', selected_race);
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
         personal_details_inputs.forEach(function (element, index, array) {
@@ -60,8 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
-    gender_downroll.addEventListener("click", function (e) {
+    gender_downroll.addEventListener("change", function (e) {
         selected_gender = gender_downroll.options[gender_downroll.selectedIndex].text.toLowerCase();
+        sessionStorage.setItem('selected_gender', selected_gender);
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
     });
@@ -99,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             if (index === 31) {
                 roll = diceRoll(1, 10);
-                console.log(roll);
                 if (roll > 0 && roll < 5)
                     element.value = 2;
                 else
@@ -121,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (index === 25) {
                     roll = diceRoll(1, 10);
-                    console.log(roll);
                     if (roll > 0 && roll < 4)
                         element.value = 11;
                     else if (roll > 3 && roll < 7)
@@ -136,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (index === 31) {
                 roll = diceRoll(1, 10);
-                console.log(roll);
                 if (roll > 0 && roll < 5)
                     element.value = 1;
                 else if (roll > 4 && roll < 8)
@@ -169,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (index === 31) {
                     roll = diceRoll(1, 10);
-                    console.log(roll);
                     if (roll > 0 && roll < 5)
                         element.value = 1;
                     else if (roll > 4)
@@ -212,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
                if (index === 31) {
                     roll = diceRoll(1, 10);
-                    console.log(roll);
                     if (roll < 8)
                         element.value = 2;
                     else
@@ -221,4 +221,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          })
     });
+    //personal detail rolls
+    // personal_details_roll_button.addEventListener("click", function (e) {
+    //     personal_details_inputs.forEach(function (element, index, array) {
+    //         //human/basic rolls
+    //         if (selected_race = "human"){
+    //             if (index = 1){
+    //                 roll = randomNumber(100);
+    //
+    //             }
+    //         }
+    //     });
+    // });
 });

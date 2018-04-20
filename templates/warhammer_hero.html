@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="content">
-
+    <h3>{{ hero.name }}:</h3>
     <form action="" method="post">
     <div class="right-side">
         <img src="/static/portraits/warhammer/{{ hero.race }}/{{ hero.gender }}/{{ hero.portrait }}.jpg" alt="Hero Portrait" id="id_portrait" name="id_portrait">
@@ -31,13 +31,13 @@
         <table>
             <th colspan="2" class=category_header>PERSONAL DETAILS
 <tr><th><label for="id_previous_careers">Previous careers:</label></th><td>{{ hero.previous_careers}}</td></tr>
-<tr><th><label for="id_age">Age:</label></th><td>{{ hero.age }}</td></tr>
+<tr><th><label for="id_age">Age:</label></th><td>{% if hero.age == None %} {% else %}{{ hero.age }}{% endif %}</td></tr>
 <tr><th><label for="id_eye_color">Eye color:</label></th><td>{{ hero.eye_color }}</td></tr>
 <tr><th><label for="id_hair_color">Hair color:</label></th><td>{{ hero.hair_color }}</td></tr>
-<tr><th><label for="id_weight">Weight:</label></th><td>{{ hero.weight }}</td></tr>
-<tr><th><label for="id_height">Height:</label></th><td>{{ hero.height }}</td></tr>
+<tr><th><label for="id_weight">Weight:</label></th><td>{% if hero.age == None %} {% else %}{{ hero.weight }}{% endif %}</td></tr>
+<tr><th><label for="id_height">Height:</label></th><td>{% if hero.age == None %} {% else %}{{ hero.height }}{% endif %}</td></tr>
 <tr><th><label for="id_star_sign">Star sign:</label></th><td>{{ hero.star_sign }}</td></tr>
-<tr><th><label for="id_number_of_siblings">Number of siblings:</label></th><td>{{ hero.number_of_siblings }}</td></tr>
+<tr><th><label for="id_number_of_siblings">Number of siblings:</label></th><td>{% if hero.age == None %} {% else %}{{ hero.number_of_siblings }}{% endif %}</td></tr>
 <tr><th><label for="id_birthplace">Birthplace:</label></th><td>{{ hero.birthplace }}</td></tr>
 <tr><th><label for="id_distinguishing_marks">Distinguishing marks:</label></th><td>{{ hero.distinguishing_marks }}</td></tr>
         </table>

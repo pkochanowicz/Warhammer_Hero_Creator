@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^warhammer/heroes/', HeroesSearchAndView.as_view(), name='warhammer-heroes'),
     url(r'^warhammer/hero/delete/(?P<hero_id>(\d+))$', HeroDeleteView.as_view(), name='warhammer-hero-delete'),
 
-    url(r'^user_login', UserLoginView.as_view(), name='user-login'),
-    url(r'^user_logout', UserLogoutView.as_view(), name='user-logout'),
-    url(r'^add_user', AddUserView.as_view(), name='add-user'),
+    url(r'^user_login/', UserLoginView.as_view(), name='user-login'),
+    url(r'^user_logout/', UserLogoutView.as_view(), name='user-logout'),
+    url(r'^add_user/', AddUserView.as_view(), name='add-user'),
 ]
