@@ -6,6 +6,9 @@ table, th, td{
 a {
     color: #a2160d;
 }
+p {
+    margin-left: 100px;
+}
 input, textarea {
     width: 130px;
     background-color: #d1d1d1;
@@ -15,10 +18,13 @@ body {
     font-family: "Times New Roman", Times, serif;
 }
 h3 {
-    padding-left: 230px;
+    padding-left: 280px;
 }
 h4 {
-    padding-left: 150px;
+    padding-left: 175px;
+}
+#logo {
+    margin-left: 35px;
 }
 .character table {
     width: 330px;

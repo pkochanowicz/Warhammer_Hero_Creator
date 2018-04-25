@@ -32,9 +32,12 @@
         </div>
         <br>
         <div class="character-profile-table">
-            <table >
+            <table>
                 <th colspan="9" class=category_header>CHARACTER PROFILE
-                    <button	id="character_profile_roll_button" type=button>Roll dices</button></th>
+                    <button	id="character_profile_roll_button" type=button>Roll dices</button>
+                    <select name="shallyas_mercy_select"  id="shallyas_mercy_select"></select>
+                    <button	id="shallyas_mercy_button" type=button>Shallya's Mercy</button>
+                </th>
                 <tr>
                     <td>Main</td><td>WS</td><td>BS</td><td>S</td><td>T</td><td>Ag</td><td>Int</td><td>WP</td><td>Fel</td>
                 </tr>
@@ -45,7 +48,7 @@
                     <td>{{ character_profile_form.agility }}</td><td>{{ character_profile_form.intelligence }}</td>
                     <td>{{ character_profile_form.will_power }}</td><td>{{ character_profile_form.fellowship }}</td>
                 </tr>
-                            <tr>
+                <tr>
                     <td class="no-border">Advance</td><td><input type="number"/></td>
                     <td><input type="number"/></td><td><input type="number"/></td>
                     <td><input type="number"/></td><td><input type="number"/></td>

@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var character_profile_inputs = document.querySelectorAll('.character-profile-table > table > tbody > tr > td > input');
     var character_profile_roll_button = document.getElementById("character_profile_roll_button");
     var portrait_number_html = document.getElementById("portrait_number");
-    //character profile skills
-    var weapon_skill, ballistic_skill, strength, toughness, agility, intelligence, will_power, fellowship,
-        attacks, wounds, strength_bonus, toughness_bonus, movement, magic, insanity_points, fate_points;
+    var shallyas_mercy_select = document.getElementById("shallyas_mercy_select");
+    var shallyas_mercy_button = document.getElementById("shallyas_mercy_button");
+    var profile_roll_counter = 0;
 
     //random numbers generators
     function diceRoll(number_of_dieces, type_of_dieces, bonus) {
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return Math.floor((Math.random()) * maximum_number) + 1;
     }
 
+
     //portrait go left and rifght
     portrait_left_button.addEventListener("click", function (e) {
         portrait_number -= 1;
@@ -39,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
         portrait.src = "/static/portraits/warhammer/" + selected_race +
             "/" + selected_gender + "/" + portrait_number + ".jpg";
         portrait_number_html.value = portrait_number;
-        sessionStorage.setItem('portrait_number', portrait_number);
     });
+
     portrait_right_button.addEventListener("click", function (e) {
         portrait_number += 1;
         if (portrait_number > 8) {
@@ -49,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
         portrait_number_html.value = portrait_number;
-        sessionStorage.setItem('portrait_number', portrait_number);
     });
+
     //race and gender selector change
     race_downroll.addEventListener("change", function (e) {
+        shallyasMercyRemoveOptions();
         selected_race = race_downroll.options[race_downroll.selectedIndex].text.toLowerCase();
-        sessionStorage.setItem('selected_race', selected_race);
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
         personal_details_inputs.forEach(function (element, index, array) {
@@ -64,17 +65,46 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
     gender_downroll.addEventListener("change", function (e) {
         selected_gender = gender_downroll.options[gender_downroll.selectedIndex].text.toLowerCase();
-        sessionStorage.setItem('selected_gender', selected_gender);
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
     });
+
+
     character_profile_roll_button.addEventListener("click", function (e) {
+        shallyasMercyRemoveOptions();
+        shallyas_mercy_select.style.visibility='visible';
+        shallyas_mercy_button.style.visibility='visible';
         character_profile_inputs.forEach(function (element, index, array) {
 //human/basic specific calculations
             if (index >= 0 && index <= 7) {
                 element.value = diceRoll(2, 10, 20);
+                if (index === 0 && element.value < 31 && (selected_race === "human" || selected_race === "elf")){
+                    shallyasMercyAddOption("Weapon skill");
+                }
+                if (index === 1 && element.value < 31 && (selected_race === "human" || selected_race === "dwarf")){
+                    shallyasMercyAddOption("Ballistic Skill");
+                }
+                if (index === 2 && element.value < 31 && selected_race !== "halfling"){
+                    shallyasMercyAddOption("Strength");
+                }
+                if (index === 3 && element.value < 31 && (selected_race === "human" || selected_race === "elf")){
+                    shallyasMercyAddOption("Toughness");
+                }
+                if (index === 4 && element.value < 31 && selected_race === "human"){
+                    shallyasMercyAddOption("Agility");
+                }
+                if (index === 5 && element.value < 31){
+                    shallyasMercyAddOption("Intelligence");
+                }
+                if (index === 6 && element.value < 31){
+                    shallyasMercyAddOption("Will Power");
+                }
+                if (index === 7 && element.value < 31 && (selected_race === "human" || selected_race === "elf")){
+                    shallyasMercyAddOption("Fellowship");
+                }
             }
             if (index === 24) {
                 element.value = 1;
@@ -113,15 +143,27 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selected_race === 'dwarf') {
                 if (index === 0) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Weapon skill");
+                    }
                 }
                 if (index === 3) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Toughness");
+                    }
                 }
                 if (index === 4) {
                     element.value = diceRoll(2, 10, 10);
+                    if (element.value < 21) {
+                        shallyasMercyAddOption("Agility");
+                    }
                 }
                 if (index === 7) {
                     element.value = diceRoll(2, 10, 10);
+                    if (element.value < 21) {
+                        shallyasMercyAddOption("Fellowship");
+                    }
                 }
                 if (index === 25) {
                     roll = diceRoll(1, 10);
@@ -151,9 +193,15 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selected_race === 'elf') {
                 if (index === 1) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Ballistic skill");
+                    }
                 }
                 if (index === 4) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Agility");
+                    }
                 }
                 if (index === 25) {
                     roll = diceRoll(1, 10);
@@ -181,21 +229,39 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selected_race === 'halfling') {
                 if (index === 0) {
                     element.value = diceRoll(2, 10, 10);
+                    if (element.value < 21) {
+                        shallyasMercyAddOption("Weapon skill");
+                    }
                 }
                 if (index === 1) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Ballistic skill");
+                    }
                 }
                 if (index === 2) {
                     element.value = diceRoll(2, 10, 10);
+                    if (element.value < 21) {
+                        shallyasMercyAddOption("Strength");
+                    }
                 }
                 if (index === 3) {
                     element.value = diceRoll(2, 10, 10);
+                    if (element.value < 21) {
+                        shallyasMercyAddOption("Toughness");
+                    }
                 }
                 if (index === 4) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Agility");
+                    }
                 }
                 if (index === 7) {
                     element.value = diceRoll(2, 10, 30);
+                    if (element.value < 41) {
+                        shallyasMercyAddOption("Fellowship");
+                    }
                 }
                 if (index === 25) {
                     roll = diceRoll(1, 10);
@@ -233,4 +299,24 @@ document.addEventListener('DOMContentLoaded', function () {
     //         }
     //     });
     // });
+            //Shallya's Mercy
+    // function shallyasMercy(base_stat){
+    //     var option = document.createElement("option");
+    //     return base_stat + 11;
+    // }
+    shallyas_mercy_button.addEventListener("click", function (e) {
+        var skill_to_change = shallyas_mercy_select.options[shallyas_mercy_select.selectedIndex].text.toLowerCase();
+    });
+
+
+    function shallyasMercyAddOption(skill_name){
+        var skill = document.createElement("option");
+        skill.text = skill_name;
+        shallyas_mercy_select.add(skill);
+    }
+
+
+    function shallyasMercyRemoveOptions() {
+         shallyas_mercy_select.length = 0;
+    }
 });
