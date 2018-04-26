@@ -4,15 +4,37 @@ from django.contrib.auth.models import User
 import os
 
 RACES = (
-    ("human", "human"),
-    ("dwarf", "dwarf"),
-    ("elf", "elf"),
-    ("halfling", "halfling"),
+    ("human", "Human"),
+    ("dwarf", "Dwarf"),
+    ("elf", "Elf"),
+    ("halfling", "Halfling"),
 )
 
 GENDERS = (
-    ("male", "male"),
-    ("female", "female"),
+    ("male", "Male"),
+    ("female", "Female"),
+)
+
+CAREERS = (
+    ("agitator", "Agitator"), ("apprentice_wizard", "Apprentice Wizard"), ("bailiff", "Bailiff"),
+    ("barber_surgeon", "Barber-Surgeon"), ("boatman", "Boatman"), ("bodyguard", "Bodyguard"),
+    ("bone_picker", "Bone Picker"), ("bounty_hunter", "Bounty Hunter"), ("burgher", "Burgher"),
+    ("camp_follower", "Camp Follower"), ("charcoal_burner", "Charcoal-Burner"), ("coachman", "Coachman"),
+    ("entertainer", "Entertainer"), ("envoy", "Envoy"), ("estalian_diestro", "Estalian Diestro"),
+    ("ferryman", "Ferryman"), ("fieldwarden", "Fieldwarden"), ("fisherman", "Fisherman"),
+    ("grave_robber", "Grave Robber"), ("hedge_wizard", "Hedge Wizard"), ("hunter", "Hunter"),
+    ("initiate", "Initiate"), ("jailer", "Jailer"), ("kislevite_kossar", "Kislevite Kossar"),
+    ("kithband_warrior", "Kithband Warrior"), ("marine", "Marine"), ("mercenary", "Mercenary"),
+    ("messenger", "Messenger"), ("militiaman", "Militiaman"), ("miner", "Miner"), ("noble", "Noble"),
+    ("norse_berserker", "Norse Berserker"), ("outlaw", "Outlaw"), ("outrider", "Outrider"),
+    ("peasant", "Peasant"), ("pit_fighter", "Pit Fighter"), ("protagonist", "Protagonist"),
+    ("rat_catcher", "Rat Catcher"), ("roadwarden", "Roadwarden"), ("rogue", "Rogue"),
+    ("runebearer", "Runebearer"), ("scribe", "Scribe"), ("seaman", "Seaman"), ("servant", "Servant"),
+    ("shieldbreaker", "Shieldbreaker"), ("smuggler", "Smuggler"), ("soldier", "Soldier"),
+    ("squire", "Squire"), ("student", "Student"), ("thief", "Thief"), ("thug", "Thug"),
+    ("toll_keeper", "Toll Keeper"), ("tomb_robber", "Tomb Robber"), ("tradesman", "Tradesman"),
+    ("troll_slayer", "Troll Slayer"), ("vagabond", "Vagabond"), ("valet", "Valet"),
+    ("watchman", "Watchman"), ("woodsman", "Woodsman"), ("zealot", "Zealot")
 )
 
 
@@ -22,11 +44,11 @@ def get_image_path(instance, filename):
 
 class Hero(models.Model):
     name = models.CharField(max_length=32, blank=True, null=True)
-    race = models.CharField(max_length=16, choices=RACES, default="human")
-    current_career = models.CharField(max_length=32, null=True, blank=True)
+    race = models.CharField(max_length=16, choices=RACES, default="Human")
+    current_career = models.CharField(max_length=32, choices=CAREERS, default="Mercenary")
     previous_careers = models.CharField(max_length=32, null=True, blank=True)
     age = models.SmallIntegerField(null=True, blank=True)
-    gender = models.CharField(choices=GENDERS, max_length=16, default="male")
+    gender = models.CharField(choices=GENDERS, max_length=16, default="Male")
     # unimportant
     eye_color = models.CharField(max_length=16, null=True, blank=True)
     hair_color = models.CharField(max_length=16, null=True, blank=True)

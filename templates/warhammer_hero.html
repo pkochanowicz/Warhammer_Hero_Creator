@@ -21,9 +21,9 @@
         <table>
             <th colspan="2" class=category_header>CHARACTER </th>
             <tr><th><label for="id_name">Hero name:</label></th><td>{{ hero.name }}</td></tr>
-<tr><th><label for="id_race">Race:</label></th><td>{{ hero.race }}</td></tr>
-<tr><th><label for="id_gender">Gender:</label></th><td>{{ hero.gender }}</td></tr>
-<tr><th><label for="id_current_career">Current career:</label></th><td>{{ hero.current_career }}</td></tr>
+<tr><th><label for="id_race">Race:</label></th><td>{{ hero.race.capitalize }}</td></tr>
+<tr><th><label for="id_gender">Gender:</label></th><td>{{ hero.gender.capitalize }}</td></tr>
+<tr><th><label for="id_current_career">Current career:</label></th><td>{{ hero.current_career.capitalize }}</td></tr>
         </table>
     </div>
     <br>

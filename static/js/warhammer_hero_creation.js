@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-        //portrait go left and rifght
+        //portrait go left and right
     portrait_left_button.addEventListener("click", function (e) {
         portrait_number -= 1;
         if (portrait_number < 1) {

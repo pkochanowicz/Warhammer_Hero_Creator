@@ -34,7 +34,27 @@ class HeroCreationCharacterForm(forms.Form):
                                       ("halfling", "Halfling"),))
     gender = forms.ChoiceField(choices=(("male", "Male"),
                                         ("female", "Female"),))
-    current_career = forms.CharField(label='Current career', max_length=32)
+    current_career = forms.ChoiceField(choices=(
+        ("agitator", "Agitator"), ("apprentice_wizard", "Apprentice Wizard"), ("bailiff", "Bailiff"),
+        ("barber_surgeon", "Barber-Surgeon"), ("boatman", "Boatman"), ("bodyguard", "Bodyguard"),
+        ("bone_picker", "Bone Picker"), ("bounty_hunter", "Bounty Hunter"), ("burgher", "Burgher"),
+        ("camp_follower", "Camp Follower"), ("charcoal_burner", "Charcoal-Burner"),  ("coachman", "Coachman"),
+        ("entertainer", "Entertainer"),  ("envoy", "Envoy"),  ("estalian_diestro", "Estalian Diestro"),
+        ("ferryman", "Ferryman"), ("fieldwarden", "Fieldwarden"),  ("fisherman", "Fisherman"),
+        ("grave_robber", "Grave Robber"),  ("hedge_wizard", "Hedge Wizard"),  ("hunter", "Hunter"),
+        ("initiate", "Initiate"), ("jailer", "Jailer"),  ("kislevite_kossar", "Kislevite Kossar"),
+        ("kithband_warrior", "Kithband Warrior"),  ("marine", "Marine"),  ("mercenary", "Mercenary"),
+        ("messenger", "Messenger"),  ("militiaman", "Militiaman"),  ("miner", "Miner"),  ("noble", "Noble"),
+        ("norse_berserker", "Norse Berserker"),  ("outlaw", "Outlaw"),  ("outrider", "Outrider"),
+        ("peasant", "Peasant"),  ("pit_fighter", "Pit Fighter"),  ("protagonist", "Protagonist"),
+        ("rat_catcher", "Rat Catcher"),  ("roadwarden", "Roadwarden"),  ("rogue", "Rogue"),
+        ("runebearer", "Runebearer"),  ("scribe", "Scribe"),  ("seaman", "Seaman"),  ("servant", "Servant"),
+        ("shieldbreaker", "Shieldbreaker"),  ("smuggler", "Smuggler"),  ("soldier", "Soldier"),
+        ("squire", "Squire"),  ("student", "Student"),  ("thief", "Thief"),  ("thug", "Thug"),
+        ("toll_keeper", "Toll Keeper"),  ("tomb_robber", "Tomb Robber"),  ("tradesman", "Tradesman"),
+        ("troll_slayer", "Troll Slayer"),  ("vagabond", "Vagabond"),  ("valet", "Valet"),
+        ("watchman", "Watchman"),  ("woodsman", "Woodsman"),  ("zealot", "Zealot"),
+    ))
 
 
 class HeroCreationPersonalDetailsForm(forms.Form):
