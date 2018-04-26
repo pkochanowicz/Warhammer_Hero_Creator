@@ -1,5 +1,6 @@
 *.sqlite3
 .idea/
+warhammer/migrations
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
