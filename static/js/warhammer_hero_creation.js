@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var portrait_number_html = document.getElementById("portrait_number");
     var shallyas_mercy_select = document.getElementById("shallyas_mercy_select");
     var shallyas_mercy_button = document.getElementById("shallyas_mercy_button");
+    var career_row = document.querySelector('.character > table > tbody');
+    var carrer_options = career_row.lastElementChild.querySelectorAll('td > select > option');
     var weapon_skill, ballistic_skill, strength, tougness, agility, intelligence, will_power, fellowship,
         attacks, wounds, strength_bonus, toughness_bonus, movement, magic, insanity_points, fate_points;
     var skill_list = [weapon_skill, ballistic_skill, strength, tougness, agility, intelligence, will_power,
@@ -21,19 +23,41 @@ document.addEventListener('DOMContentLoaded', function () {
     var skill_name_list = ["Weapon skill", "Ballistic skill", "Strength", "Tougness", "Agility", "Intelligence"
         , "Will power", "Fellowship", "Attacks", "Wounds", "Strength bonus", "Toughness bonus", "Movement",
         "Magic", "Insanity points", "Fate points"];
+    var human_entry_careers = ["agitator", "apprentice_wizard", "bailiff", "barber_surgeon", "boatman", "bodyguard",
+        "bone_picker", "bounty_hunter", "burgher", "camp_follower", "charcoal_burner", "coachman", "entertainer",
+        "estalian_diestro", "ferryman", "fisherman", "grave_robber", "hedge_wizard", "hunter", "initiate", "jailer",
+        "kislevite_kossar", "marine", "mercenary", "messenger", "militiaman", "miner", "noble", "norse_berserker",
+        "outlaw", "outrider", "peasant", "pit_fighter", "protagonist", "rat_catcher", "roadwarden", "rogue", "scribe",
+        "seaman", "servant", "smuggler", "soldier", "squire", "student", "thief", "thug", "toll_keeper", "tomb_robber",
+        "tradesman", "vagabond", "valet", "watchman", "woodsman", "zealot"];
+    var dwarf_entry_careers = ["agitator", "bodyguard", "burgher", "coachman", "entertainer", "hunter", "jailer",
+        "marine", "mercenary", "miner", "noble", "outlaw", "pit_fighter", "protagonist", "rat_catcher", "runebearer",
+        "scribe", "seaman", "servant", "shieldbreaker", "smuggler", "soldier", "student", "thief", "toll_keeper",
+        "tomb_robber", "tradesman", "troll_slayer", "watchman"];
+    var elf_entry_careers = ["apprentice_wizard", "entertainer", "envoy", "hunter", "kithband_warrior", "mercenary",
+        "messenger", "outlaw", "outrider", "rogue", "scribe", "seaman", "student", "thief", "tradesman", "vagabond"];
+    var halfing_entry_careers = ["agitator", "barber_surgeon","bone_picker", "bounty_hunter", "burgher",
+        "camp_follower", "charcoal_burner","entertainer", "field_warden", "fisherman", "grave_robber", "hunter",
+        "mercenary", "messenger", "militiaman", "outlaw","peasant", "rat_catcher", "rogue", "servant", "smuggler",
+        "soldier", "student", "thief", "toll_keeper", "tomb_robber", "tradesman", "vagabond", "valet", "watchman"];
 
 
-//dieces:
-    function diceRoll(number_of_dieces, type_of_dieces) {
+    CheckIfCareerIsAvailable();
+//dices:
+    function diceRoll(number_of_dices, type_of_dices) {
         var result = 0;
-        for (var i = 0; i < number_of_dieces; i++) {
-            result += ((Math.floor(Math.random() * type_of_dieces)) + 1);
+        for (var i = 0; i < number_of_dices; i++) {
+            result += ((Math.floor(Math.random() * type_of_dices)) + 1);
         }
         return result;
     }
 
     function randomNumber(maximum_number) {
         return Math.floor((Math.random()) * maximum_number) + 1;
+    }
+
+    function isInArray(value, array) {
+        return array.indexOf(value) > -1;
     }
 
     function PrimarySkill(base, roll, skill_name, input_name) {
@@ -62,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
         character_profile_inputs.forEach(function (element, index, array) {
                 element.value = null;
             });
+        CheckIfCareerIsAvailable();
         });
     });
 
@@ -70,6 +95,43 @@ document.addEventListener('DOMContentLoaded', function () {
         portrait.src = "/static/portraits/warhammer/" + selected_race + "/"
             + selected_gender + "/" + portrait_number + ".jpg";
     });
+
+    //career fits the race:
+    function CheckIfCareerIsAvailable(){
+        carrer_options.forEach(function (element, index, array) {
+           element.disabled = false;
+            });
+        if (selected_race === "human"){
+            carrer_options.forEach(function (element, index, array) {
+                if (isInArray(element.value, human_entry_careers) === false) {
+                    element.disabled = "disabled";
+                }
+            });
+        }
+        if (selected_race === "dwarf"){
+            carrer_options.forEach(function (element, index, array) {
+                if (isInArray(element.value, dwarf_entry_careers) === false) {
+                    element.disabled = "disabled";
+                }
+            });
+        }
+        if (selected_race === "elf"){
+            carrer_options.forEach(function (element, index, array) {
+                if (isInArray(element.value, elf_entry_careers) === false) {
+                    element.disabled = "disabled";
+                }
+            });
+        }
+        if (selected_race === "halfling"){
+            carrer_options.forEach(function (element, index, array) {
+                if (isInArray(element.value, halfing_entry_careers) === false) {
+                    element.disabled = "disabled";
+                }
+            });
+        }
+        carrer_options[26].selected = "selected";
+    }
+
     character_profile_roll_button.addEventListener("click", function (e) {
         shallyasMercyRemoveOptions();
         shallyas_mercy_select.style.visibility = "visible";
