@@ -4,9 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var portrait_left_button = document.getElementById("portrait_left_button");
     var portrait_right_button = document.getElementById("portrait_right_button");
     var race_downroll = document.getElementById("id_race");
-    var selected_race = "human";
     var gender_downroll = document.getElementById("id_gender");
+    var current_career_downroll = document.getElementById("id_current_career");
+    var selected_race = "human";
     var selected_gender = "male";
+    var selected_current_career = "mercenary";
     var personal_details_inputs = document.querySelectorAll('.character-personal-details > table > tbody > tr > td > input');
     var personal_details_roll_button = document.querySelectorAll("personal_details_roll_button");
     var character_profile_inputs = document.querySelectorAll('.character-profile-table > table > tbody > tr > td > input');
@@ -23,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var skill_name_list = ["Weapon skill", "Ballistic skill", "Strength", "Tougness", "Agility", "Intelligence"
         , "Will power", "Fellowship", "Attacks", "Wounds", "Strength bonus", "Toughness bonus", "Movement",
         "Magic", "Insanity points", "Fate points"];
-    var human_entry_careers = ["agitator", "apprentice_wizard", "bailiff", "barber_surgeon", "boatman", "bodyguard",
-        "bone_picker", "bounty_hunter", "burgher", "camp_follower", "charcoal_burner", "coachman", "entertainer",
+    var human_entry_careers = ["agitator", "apprentice_wizard", "bailiff", "barber-surgeon", "boatman", "bodyguard",
+        "bone_picker", "bounty_hunter", "burgher", "camp_follower", "charcoal-burner", "coachman", "entertainer",
         "estalian_diestro", "ferryman", "fisherman", "grave_robber", "hedge_wizard", "hunter", "initiate", "jailer",
         "kislevite_kossar", "marine", "mercenary", "messenger", "militiaman", "miner", "noble", "norse_berserker",
         "outlaw", "outrider", "peasant", "pit_fighter", "protagonist", "rat_catcher", "roadwarden", "rogue", "scribe",
@@ -36,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         "tomb_robber", "tradesman", "troll_slayer", "watchman"];
     var elf_entry_careers = ["apprentice_wizard", "entertainer", "envoy", "hunter", "kithband_warrior", "mercenary",
         "messenger", "outlaw", "outrider", "rogue", "scribe", "seaman", "student", "thief", "tradesman", "vagabond"];
-    var halfing_entry_careers = ["agitator", "barber_surgeon","bone_picker", "bounty_hunter", "burgher",
-        "camp_follower", "charcoal_burner","entertainer", "field_warden", "fisherman", "grave_robber", "hunter",
+    var halfing_entry_careers = ["agitator", "barber-surgeon","bone_picker", "bounty_hunter", "burgher",
+        "camp_follower", "charcoal-burner","entertainer", "field_warden", "fisherman", "grave_robber", "hunter",
         "mercenary", "messenger", "militiaman", "outlaw","peasant", "rat_catcher", "rogue", "servant", "smuggler",
         "soldier", "student", "thief", "toll_keeper", "tomb_robber", "tradesman", "vagabond", "valet", "watchman"];
 
@@ -60,22 +62,37 @@ document.addEventListener('DOMContentLoaded', function () {
         return array.indexOf(value) > -1;
     }
 
+    // skills functions
     function PrimarySkill(base, roll, skill_name, input_name) {
         this.base = base;
         this.roll = roll;
         this.skill_name = skill_name;
         this.input_name = input_name;
-        input_name.value = base + roll;
+        input_name.value = this.base + this.roll;
         if (roll < 11)
             shallyasMercyAddOption(skill_name);
     }
+
     function SecondarySkill(result, skill_name, input_name) {
         this.result = result;
         this.skill_name = skill_name;
         this.input_name = input_name;
         input_name.value = result;
     }
-    //race and gender selector change
+    //strength and toughness setter
+    PrimarySkill.prototype = {
+            set points(value) {
+            this.input_name.value = value;
+            if (this.skill_name = "strength"){
+                skill_list[10].input_name.value = String(value)[0];
+            }
+            if (this.skill_name = "toughness"){
+                skill_list[11].input_name.value = String(value)[0];
+            }
+        }
+    };
+
+    //race gender and current career select change
     race_downroll.addEventListener("change", function (e) {
         shallyasMercyRemoveOptions();
         selected_race = race_downroll.options[race_downroll.selectedIndex].text.toLowerCase();
@@ -96,7 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
             + selected_gender + "/" + portrait_number + ".jpg";
     });
 
-    //career fits the race:
+    current_career_downroll.addEventListener("change", function (e) {
+        selected_current_career = current_career_downroll.options[current_career_downroll.selectedIndex]
+            .text.toLowerCase().replace(" ", "_");
+        console.log(selected_current_career)
+    });
+
+    //if career fits the race:
     function CheckIfCareerIsAvailable(){
         carrer_options.forEach(function (element, index, array) {
            element.disabled = false;
@@ -307,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
         skill_list.forEach(function (element,	index,	array){
            if (element.skill_name.toLowerCase() === skill_to_change){
                element.roll = 11;
-               element.input_name.value = element.roll + element.base;
+               element.points = element.roll + element.base;
            }
        shallyas_mercy_select.style.visibility = "hidden";
         shallyas_mercy_button.style.visibility = "hidden";

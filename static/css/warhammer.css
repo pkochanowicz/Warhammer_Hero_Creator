@@ -12,6 +12,10 @@ p {
 input, textarea {
     width: 130px;
     background-color: #d1d1d1;
+    cursor: pointer;
+}
+select {
+    cursor: pointer;
 }
 body {
     background-color: #d3b567;
@@ -33,7 +37,7 @@ h4 {
     width: 330px;
 }
 .character-profile-table table {
-    width: 450px;
+    width: 420px;
 }
 .no-border {
     border: 0;
@@ -41,16 +45,10 @@ h4 {
 .character-profile-table input{
     width: 30px;
 }
-.right-side {
-    width: 125px;
-	text-align: center;
-	line-height: 20px;
-    /*float: right;*/
-    /*margin-right: 880px;*/
-    position: absolute;
-    left: 360px;
+.character-picture {
+    text-align: center;
 }
-.right-side #id_portrait {
+#id_portrait {
     width: 260px;
 	height: 340px;
     border: 1px solid black;

@@ -7,15 +7,7 @@
     <h3>Hero creation:</h3>
     <form action="" method="post">
     {% csrf_token %}
-    <div class="right-side">
-            <img src="/static/portraits/warhammer/{{ race }}/{{ gender }}/{{ portrait }}.jpg" alt="Hero Portrait" id="id_portrait" name="id_portrait">
-            <input type="hidden" name="portrait_number" value="1" id="portrait_number">
-            <button id="portrait_left_button" type=button>Left</button>
-            <button id="portrait_right_button" type=button>Right</button>
-        <br>
-        <input type="submit" value="Save">
-    </div>
-    <div class="left-side">
+    <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-6 col-xs-12">
         <div class=character>
             <table>
                 <th colspan="2" class=category_header>CHARACTER</th>
@@ -33,7 +25,7 @@
         <br>
         <div class="character-profile-table">
             <table>
-                <th colspan="9" class=category_header>CHARACTER PROFILE
+                <th colspan="9" class="category_header">CHARACTER PROFILE
                     <button	id="character_profile_roll_button" type=button>Roll dices</button>
                     <select name="shallyas_mercy_select"  id="shallyas_mercy_select" style="visibility:hidden;"></select>
                     <button	id="shallyas_mercy_button" type=button style="visibility:hidden;">Shallya's Mercy</button>
@@ -88,7 +80,19 @@
                     <td><input type="number"/></td>
                 </tr>
             </table>
+            <br>
             </div>
+        </div>
+        <div class="character-picture col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <img src="/static/portraits/warhammer/{{ race }}/{{ gender }}/{{ portrait }}.jpg" alt="Hero Portrait" id="id_portrait" name="id_portrait">
+            <input type="hidden" name="portrait_number" value="1" id="portrait_number">
+            <br>
+            <br>
+            <button id="portrait_left_button" type=button>Left</button>
+            <button id="portrait_right_button" type=button>Right</button>
+            <br>
+            <br>
+            <input type="submit" value="Save">
         </div>
     </form>
     <script src="{% static 'js/warhammer_hero_creation.js'%}"></script>

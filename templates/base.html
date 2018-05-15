@@ -2,28 +2,38 @@
 {% load static %}
 <html lang="en">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
     <title>RPG Hero creator - {% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
     {% block header %}{% endblock %}
-    <link rel="shortcut icon" href="#" />
 </head>
 <body>
         <img src="/static/pictures/logo.gif" alt="Logo" name="logo" id="logo">
         <h4>
-        <a href='/'>Main site</a>
-        <a href='/warhammer/hero_creation/'>Create a hero</a>
-        <a href='/warhammer/heroes/'>Your characters</a>
-            {% if user.id == None %}
-                <a href='/user_login/'>Login</a>
-                <a href='/add_user/'>Register</a>
-            {% else %}
-                <a href='/user_logout/'>Logout</a>
-            {% endif %}
+        <a href='/' class="btn btn-default" role="button">Main site</a>
+        <a href='/warhammer/hero_creation/' class="btn btn-default">Create a hero</a>
+        <a href='/warhammer/heroes/' class="btn btn-default">Your characters</a>
+
+        <a href='/user_login/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %} >Login</a>
+        <a href='/add_user/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %}>Register</a>
+        <a href='/user_logout/' class="btn btn-default"
+           {% if user.id == None %}disabled="disabled" {% endif %}>Logout</a>
+
         </h4>
     <div id="content">
         {% block content %}{% endblock %}
+    </div>d
+
+    <div id="footer">
     </div>
-<div id="footer">
-</div>
-<link rel="stylesheet" type="text/css" href="{% static 'css/warhammer.css' %}" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/warhammer.css' %}" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </body>
 </html>
