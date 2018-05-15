@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "mercenary", "messenger", "militiaman", "outlaw","peasant", "rat_catcher", "rogue", "servant", "smuggler",
         "soldier", "student", "thief", "toll_keeper", "tomb_robber", "tradesman", "vagabond", "valet", "watchman"];
 
-
+    
     CheckIfCareerIsAvailable();
 //dices:
     function diceRoll(number_of_dices, type_of_dices) {
