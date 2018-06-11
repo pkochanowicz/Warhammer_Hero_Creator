@@ -10,21 +10,26 @@
     {% block header %}{% endblock %}
 </head>
 <body>
-        <img src="/static/pictures/logo.gif" alt="Logo" name="logo" id="logo">
-        <h4>
-        <a href='/' class="btn btn-default" role="button">Main site</a>
-        <a href='/warhammer/hero_creation/' class="btn btn-default">Create a hero</a>
-        <a href='/warhammer/heroes/' class="btn btn-default">Your characters</a>
 
-        <a href='/user_login/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %} >Login</a>
-        <a href='/add_user/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %}>Register</a>
-        <a href='/user_logout/' class="btn btn-default"
-           {% if user.id == None %}disabled="disabled" {% endif %}>Logout</a>
-
-        </h4>
-    <div id="content">
+    <div class="row logo-container centered-form center-block">
+        <div class="logo centered col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <img src="/static/pictures/logo.gif" alt="Logo" name="logo" id="logo" class = "">
+        </div>
+        <div class="menu-navigation centered col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+            <a href='/' class="btn btn-default" role="button">Main site</a>
+            <a href='/warhammer/hero_creation/' class="btn btn-default">Create a hero</a>
+            <a href='/warhammer/heroes/' class="btn btn-default">Your characters</a>
+            <a href='/user_login/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %} >Login</a>
+            <a href='/add_user/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %}>Register</a>
+            <a href='/user_logout/' class="btn btn-default"
+            {% if user.id == None %}disabled="disabled" {% endif %}>Logout</a>
+        </div>
+    </div>
+    </br>
+    </br>
+    <div id="content" class="container centered col-xs-12 col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 ">
         {% block content %}{% endblock %}
-    </div>d
+    </div>
 
     <div id="footer">
     </div>

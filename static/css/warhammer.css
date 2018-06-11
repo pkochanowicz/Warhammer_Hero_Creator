@@ -21,15 +21,6 @@ body {
     background-color: #d3b567;
     font-family: "Times New Roman", Times, serif;
 }
-h3 {
-    padding-left: 280px;
-}
-h4 {
-    padding-left: 175px;
-}
-#logo {
-    margin-left: 35px;
-}
 .character table {
     width: 330px;
 }
@@ -48,8 +39,15 @@ h4 {
 .character-picture {
     text-align: center;
 }
+.menu-navigation {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
 #id_portrait {
     width: 260px;
 	height: 340px;
     border: 1px solid black;
+}
+.centered {
+    text-align: center;
 }
