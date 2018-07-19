@@ -76,6 +76,8 @@ class Hero(models.Model):
     insanity_points = models.SmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
     fate_points = models.SmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
     # functionalities
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, related_name='player', on_delete=models.CASCADE, blank=True, null=True)
+    game_master = models.ForeignKey(User, related_name='game_master',  on_delete=models.CASCADE, blank=True, null=True)
+    experience = models.SmallIntegerField(default=0)
     portrait = models.SmallIntegerField([MinValueValidator(1), MaxValueValidator(8)], blank=True, null=True)
 

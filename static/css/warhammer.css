@@ -51,3 +51,15 @@ body {
 .centered {
     text-align: center;
 }
+.align-left{
+    text-align: left;
+}
+.input-block input{
+    display: block;
+}
+.input-block p{
+    text-align: left;
+}
+.button-centered{
+    margin: 0 auto;
+}

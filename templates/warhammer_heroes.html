@@ -13,8 +13,10 @@
     <br>
     <ul>
     {% for hero in heroes%}
+        <div class="align-left">
         <li><a href='/warhammer/hero/{{ hero.id }}'>{{ hero.name }}</a> - {{ hero.race.capitalize }} {{ hero.current_career.capitalize }} -
             <a href='/warhammer/hero/delete/{{ hero.id }}'>Delete</a></li>
+        </div>
         {% endfor %}
     </ul>
 {% endblock %}

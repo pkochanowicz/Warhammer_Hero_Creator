@@ -154,9 +154,13 @@ class HeroesSearchAndView(View):
 class HeroDeleteView(View):
     @method_decorator(login_required)
     def get(self, request, hero_id):
+        current_user = request.user
         hero = Hero.objects.get(id=hero_id)
-        hero.delete()
-        return redirect("/warhammer/heroes/")
+        if current_user == hero.user:
+            hero.delete()
+            return redirect("/warhammer/heroes/")
+        else:
+            return render(request, 'access_denied.html', {})
 
 
 class UserLoginView(View):
