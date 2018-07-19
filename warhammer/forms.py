@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator, validate_email
 from .models import Hero
@@ -7,17 +8,17 @@ from .models import Hero
 
 
 def	validate_age(value):
-    if value < 16 or value > 125:
+    if value < 16 or value > 200:
         raise ValidationError("Wrong age")
 
 
 def	validate_weight(value):
-    if value < 30 or value > 120:
+    if value < 30 or value > 150:
         raise ValidationError("Wrong weight")
 
 
 def	validate_height(value):
-    if value < 80 or value > 190:
+    if value < 80 or value > 200:
         raise ValidationError("Wrong height")
 
 
@@ -26,8 +27,17 @@ def	validate_positive(value):
         raise ValidationError("Must be a positive number")
 
 
+def validate_if_user_exists(user_name):
+    try:
+        user = User.objects.get(username=user_name)
+    except:
+        raise ValidationError("There is no such user")
+
+
 class HeroCreationCharacterForm(forms.Form):
     name = forms.CharField(label='Hero name', max_length=32)
+    game_master_name = forms.CharField(label='Game master user name',
+                                           validators=[validate_if_user_exists])
     race = forms.ChoiceField(choices=(("human", "Human"),
                                       ("dwarf", "Dwarf"),
                                       ("elf", "Elf"),
@@ -100,6 +110,12 @@ class HeroSearchForm(forms.Form):
                                         ("male", "Male"),
                                         ("female", "Female"),), required=False)
     current_career = forms.CharField(label='Current career', max_length=32, required=False)
+
+
+class GameMasterEditForm(forms.Form):
+    game_master_name = forms.CharField(label='New game master user name',
+                                       validators=[validate_if_user_exists])
+
 
 # user management forms
 

@@ -9,12 +9,11 @@ from django.utils.decorators import method_decorator
 from django.views.generic.base import View
 
 from warhammer.forms import HeroCreationCharacterForm, HeroCreationPersonalDetailsForm, \
-    HeroCreationCharacterProfileForm, UserLoginForm, AddUserForm, HeroSearchForm
+    HeroCreationCharacterProfileForm, UserLoginForm, AddUserForm, HeroSearchForm, GameMasterEditForm
 from warhammer.models import Hero
 
 
 class HeroCreationView(View):
-    @method_decorator(login_required)
     def get(self, request):
         character_form = HeroCreationCharacterForm
         personal_details_form = HeroCreationPersonalDetailsForm
@@ -38,6 +37,8 @@ class HeroCreationView(View):
         if character_form.is_valid() & personal_details_form.is_valid() & character_profile_form.is_valid():
             # character form:
             name = character_form.cleaned_data['name']
+            game_master_name = character_form.cleaned_data['game_master_name']
+            game_master = User.objects.get(username=game_master_name)
             race = character_form.cleaned_data['race']
             gender = character_form.cleaned_data['gender']
             current_career = character_form.cleaned_data['current_career']
@@ -73,6 +74,7 @@ class HeroCreationView(View):
             portrait = request.POST.get("portrait_number")
             new_hero = Hero.objects.create(
                 name=name,
+                game_master=game_master,
                 race=race,
                 gender=gender,
                 current_career=current_career,
@@ -122,8 +124,19 @@ class HeroCreationView(View):
 class HeroView(View):
     @method_decorator(login_required)
     def get(self, request, hero_id):
+        game_master_form = GameMasterEditForm
         hero = Hero.objects.get(id=hero_id)
-        return render(request, "warhammer_hero.html", {"hero": hero})
+        hero.current_career = hero.current_career.replace('_', ' ')
+        return render(request, "warhammer_hero.html", {"hero": hero,
+                                                       "game_master_form": game_master_form})
+
+    # def post(self, request, hero_id):
+    #     form = GameMasterEditForm(request.Post)
+    #     if form.is_valid():
+    #         game_master_name = form.cleaned_data['game_master_name']
+    #         game_master = User.objects.get(username=game_master_name)
+    #         hero = Hero.objects.get(id=hero_id)
+    #         hero.game_master = game_master
 
 
 class HeroesSearchAndView(View):
@@ -165,8 +178,12 @@ class HeroDeleteView(View):
 
 class UserLoginView(View):
     def get(self, request):
-        form = UserLoginForm()
-        return render(request, 'user_login.html', {'form': form})
+        if request.user.is_authenticated:
+            message = "You're already logged in."
+            return render(request, 'access_denied.html', {'message': message})
+        else:
+            form = UserLoginForm()
+            return render(request, 'user_login.html', {'form': form})
 
     def post(self, request):
         form = UserLoginForm(request.POST)
