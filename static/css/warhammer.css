@@ -6,9 +6,6 @@ table, th, td{
 a {
     color: #a2160d;
 }
-p {
-    margin-left: 100px;
-}
 input, textarea {
     width: 130px;
     background-color: #d1d1d1;
@@ -18,8 +15,25 @@ select {
     cursor: pointer;
 }
 body {
-    background-color: #d3b567;
+    background-color: black;
     font-family: "Times New Roman", Times, serif;
+}
+#content{
+    border: 3px solid saddlebrown;
+    background-color: #d3b567;
+    padding-bottom: 1em;
+    margin-bottom: 4em;
+}
+#content h3 {
+    margin-bottom: 1em;
+}
+.logo{
+    background-image: url('/static/pictures/logo.gif');
+    background-size: 100em 23em;
+    background-attachment: fixed;
+    background-position: center top;
+    height: 23em;
+    width: 100em;
 }
 .character table {
     width: 330px;
