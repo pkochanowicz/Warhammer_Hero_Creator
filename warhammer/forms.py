@@ -28,16 +28,18 @@ def	validate_positive(value):
 
 
 def validate_if_user_exists(user_name):
-    try:
-        user = User.objects.get(username=user_name)
-    except:
-        raise ValidationError("There is no such user")
+    if user_name != "":
+        try:
+            user = User.objects.get(username=user_name)
+        except:
+            raise ValidationError("There is no such user")
 
 
 class HeroCreationCharacterForm(forms.Form):
     name = forms.CharField(label='Hero name', max_length=32)
     game_master_name = forms.CharField(label='Game master user name',
-                                           validators=[validate_if_user_exists])
+                                       validators=[validate_if_user_exists],
+                                       required=False)
     race = forms.ChoiceField(choices=(("human", "Human"),
                                       ("dwarf", "Dwarf"),
                                       ("elf", "Elf"),

@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from warhammer.views import HeroCreationView, HeroView, UserLoginView, AddUserView, UserLogoutView, HeroesSearchAndView, \
+from warhammer.views import HeroCreationView, HeroView, UserLoginView, AddUserView, UserProfileView, UserLogoutView, HeroesSearchAndView, \
     MainSiteView, HeroDeleteView
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^warhammer/heroes/', HeroesSearchAndView.as_view(), name='warhammer-heroes'),
     url(r'^warhammer/hero/delete/(?P<hero_id>(\d+))$', HeroDeleteView.as_view(), name='warhammer-hero-delete'),
 
+    url(r'^user_profile/(?P<user_id>(\d+))$', UserProfileView.as_view(), name='user-profile'),
     url(r'^user_login/', UserLoginView.as_view(), name='user-login'),
     url(r'^user_logout/', UserLogoutView.as_view(), name='user-logout'),
     url(r'^add_user/', AddUserView.as_view(), name='add-user'),

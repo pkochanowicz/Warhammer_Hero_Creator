@@ -9,14 +9,14 @@
     {% csrf_token %}
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-8">
         <div class=character>
-            <table>
+            <table class="hero-table">
                 <th colspan="2" class=category_header>CHARACTER</th>
                 {{ character_form.as_table}}
             </table>
         </div>
         <br>
         <div class="character-personal-details">
-            <table>
+            <table class="hero-table">
                 <th colspan="2" class=category_header>PERSONAL DETAILS
                     <button	id="personal_details_roll_button" type=button>Roll dices</button></th>
                 {{ personal_details_form.as_table}}
@@ -24,7 +24,7 @@
         </div>
         <br>
         <div class="character-profile-table">
-            <table>
+            <table class="hero-table">
                 <th colspan="9" class="category_header">CHARACTER PROFILE
                     <button	id="character_profile_roll_button" type=button>Roll dices</button>
                     <select name="shallyas_mercy_select"  id="shallyas_mercy_select" style="visibility:hidden;"></select>

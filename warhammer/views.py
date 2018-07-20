@@ -37,8 +37,6 @@ class HeroCreationView(View):
         if character_form.is_valid() & personal_details_form.is_valid() & character_profile_form.is_valid():
             # character form:
             name = character_form.cleaned_data['name']
-            game_master_name = character_form.cleaned_data['game_master_name']
-            game_master = User.objects.get(username=game_master_name)
             race = character_form.cleaned_data['race']
             gender = character_form.cleaned_data['gender']
             current_career = character_form.cleaned_data['current_career']
@@ -74,7 +72,6 @@ class HeroCreationView(View):
             portrait = request.POST.get("portrait_number")
             new_hero = Hero.objects.create(
                 name=name,
-                game_master=game_master,
                 race=race,
                 gender=gender,
                 current_career=current_career,
@@ -107,6 +104,10 @@ class HeroCreationView(View):
                 user=user,
                 portrait=portrait
             )
+            game_master_name = character_form.cleaned_data['game_master_name']
+            if game_master_name != "":
+                game_master = User.objects.get(username=game_master_name)
+                new_hero.game_master = game_master
             new_hero.save()
             return redirect("/warhammer/hero/{}".format(new_hero.id))
         else:
@@ -154,7 +155,6 @@ class HeroesSearchAndView(View):
             name = form.cleaned_data['name']
             race = form.cleaned_data['race']
             gender = form.cleaned_data['gender']
-            print(race, gender)
             current_career = form.cleaned_data['current_career']
             user_heroes = Hero.objects.filter(name__icontains=name, race__icontains=race,
                                               current_career__icontains=current_career, user=request.user)
@@ -174,6 +174,20 @@ class HeroDeleteView(View):
             return redirect("/warhammer/heroes/")
         else:
             return render(request, 'access_denied.html', {})
+
+
+class UserProfileView(View):
+    @method_decorator(login_required)
+    def get(self, request, user_id):
+        current_user = request.user
+        user_to_check = User.objects.get(id=user_id)
+        user_heroes = Hero.objects.filter(user=user_to_check)
+        if current_user == user_to_check:
+            return render(request, 'user_profile.html', {'user': user_to_check,
+                                                         'heroes': user_heroes})
+        else:
+            return render(request, 'user_profile.html', {'user': user_to_check,
+                                                         'heroes': user_heroes})
 
 
 class UserLoginView(View):
