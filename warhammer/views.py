@@ -1,15 +1,13 @@
-import urllib.request
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View
 
 from warhammer.forms import HeroCreationCharacterForm, HeroCreationPersonalDetailsForm, \
-    HeroCreationCharacterProfileForm, UserLoginForm, AddUserForm, HeroSearchForm, GameMasterEditForm
+    HeroCreationCharacterProfileForm, UserLoginForm, AddUserForm, HeroSearchForm, GameMasterEditForm, \
+    AssignExperienceForm
 from warhammer.models import Hero
 
 
@@ -145,7 +143,9 @@ class HeroesSearchAndView(View):
     def get(self, request):
         form = HeroSearchForm
         user_heroes = Hero.objects.filter(user=request.user)
-        return render(request, "warhammer_heroes.html", {"heroes":user_heroes,
+        game_master_heroes = Hero.objects.filter(game_master=request.user)
+        return render(request, "warhammer_heroes.html", {"user_heroes": user_heroes,
+                                                         "game_master_heroes": game_master_heroes,
                                                          "form": form})
 
     @method_decorator(login_required)
@@ -158,9 +158,13 @@ class HeroesSearchAndView(View):
             current_career = form.cleaned_data['current_career']
             user_heroes = Hero.objects.filter(name__icontains=name, race__icontains=race,
                                               current_career__icontains=current_career, user=request.user)
+            game_master_heroes = Hero.objects.filter(name__icontains=name, race__icontains=race,
+                                                     current_career__icontains=current_career, game_master=request.user)
             if gender != "":
                 user_heroes = user_heroes.filter(gender=gender)
-            return render(request, "warhammer_heroes.html", {'heroes': user_heroes,
+                game_master_heroes = game_master_heroes.filter(gender=gender)
+            return render(request, "warhammer_heroes.html", {'user_heroes': user_heroes,
+                                                             'game_master_heroes': game_master_heroes,
                                                              "form": form})
 
 
@@ -182,12 +186,49 @@ class UserProfileView(View):
         current_user = request.user
         user_to_check = User.objects.get(id=user_id)
         user_heroes = Hero.objects.filter(user=user_to_check)
+        game_master_heroes = Hero.objects.filter(game_master=user_to_check)
         if current_user == user_to_check:
             return render(request, 'user_profile.html', {'user': user_to_check,
-                                                         'heroes': user_heroes})
+                                                         'user_heroes': user_heroes,
+                                                         'game_master_heroes': game_master_heroes})
         else:
             return render(request, 'user_profile.html', {'user': user_to_check,
-                                                         'heroes': user_heroes})
+                                                         'user_heroes': user_heroes,
+                                                         'game_master_heroes': game_master_heroes})
+
+
+class AssignExperienceView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        user = request.user
+        form = AssignExperienceForm(user)
+        game_master_heroes = Hero.objects.filter(game_master=request.user)
+        if not game_master_heroes:
+            message = "Sorry, currently you aren't a game master for any character."
+            return render(request, 'warhammer_assign_experience.html', {'message': message})
+        else:
+            return render(request, 'warhammer_assign_experience.html', {'form': form})
+
+    @method_decorator(login_required)
+    def post(self, request):
+        user = request.user
+        form = AssignExperienceForm(user, request.POST)
+
+        if form.is_valid():
+            hero_name = form.cleaned_data['hero']
+            experience = form.cleaned_data['experience']
+            game_master_heroes = Hero.objects.filter(game_master=request.user)
+            message = str(experience) + " experience assigned to " + str(hero_name)
+            hero = Hero.objects.get(name=hero_name)
+            hero.experience += experience
+            hero.save()
+            return render(request, 'warhammer_assign_experience.html', {'form': form,
+                                                                        'message': message})
+        else:
+            form = AssignExperienceForm(user)
+            message = "You have to assign a number between 1 and 2000."
+            return render(request, 'warhammer_assign_experience.html', {'form': form,
+                                                                        'message': message})
 
 
 class UserLoginView(View):
@@ -209,7 +250,7 @@ class UserLoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/warhammer/hero_creation/')
+                return redirect('/warhammer/hero-creation/')
             else:
                 return render(request, 'user_login.html', {'form': form,
                                                            'message': 'Wrong login or password'})

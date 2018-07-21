@@ -22,6 +22,11 @@ def	validate_height(value):
         raise ValidationError("Wrong height")
 
 
+def	validate_experience_assignment(value):
+    if value < 1 or value > 2000:
+        raise ValidationError("You have to assign a number between 1 and 2000")
+
+
 def	validate_positive(value):
     if value < 0:
         raise ValidationError("Must be a positive number")
@@ -37,7 +42,7 @@ def validate_if_user_exists(user_name):
 
 class HeroCreationCharacterForm(forms.Form):
     name = forms.CharField(label='Hero name', max_length=32)
-    game_master_name = forms.CharField(label='Game master user name',
+    game_master_name = forms.CharField(label="Game master user name (leave empty if you don't want to assign one)",
                                        validators=[validate_if_user_exists],
                                        required=False)
     race = forms.ChoiceField(choices=(("human", "Human"),
@@ -112,6 +117,16 @@ class HeroSearchForm(forms.Form):
                                         ("male", "Male"),
                                         ("female", "Female"),), required=False)
     current_career = forms.CharField(label='Current career', max_length=32, required=False)
+
+
+class AssignExperienceForm(forms.Form):
+    hero = forms.ModelChoiceField(queryset=Hero.objects.filter(game_master=1))
+    experience = forms.IntegerField(label="How much experience would you like to assign?",
+                                    validators=[validate_experience_assignment])
+
+    def __init__(self, user, *args, **kwargs):
+        super(AssignExperienceForm, self).__init__(*args, **kwargs)
+        self.fields['hero'].queryset = Hero.objects.filter(game_master=user)
 
 
 class GameMasterEditForm(forms.Form):

@@ -43,6 +43,8 @@ def get_image_path(instance, filename):
 
 
 class Hero(models.Model):
+    def __str__(self):
+        return self.name
     name = models.CharField(max_length=32, blank=True, null=True)
     race = models.CharField(max_length=16, choices=RACES, default="Human")
     current_career = models.CharField(max_length=32, choices=CAREERS, default="Mercenary")

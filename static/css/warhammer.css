@@ -39,11 +39,6 @@ body {
 .character-profile-table table {
     width: 420px;
 }
-.hero-table table, th, td{
-    border: 1px solid black;
-    border-collapse: collapse;
-    text-align: center;
-}
 .character-profile-table input{
     width: 30px;
 }
@@ -74,6 +69,8 @@ body {
 .button-centered{
     margin: 0 auto;
 }
-.no-border-table table, td, th{
-    border: 0;
+.hero-table table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
 }

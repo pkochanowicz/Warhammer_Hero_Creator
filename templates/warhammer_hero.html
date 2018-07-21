@@ -23,8 +23,9 @@
             <tr><th><label for="id_current_career">Current career:</label></th><td>{{ hero.current_career.capitalize }}</td></tr>
             <form action="" method="post">
                 {% csrf_token %}
-                <tr><th><label for="id_player">Player:</label></th><td><a href='/user_profile/{{ hero.user.id }}'>{{ hero.user.username }}</a></td></tr>
-                <tr><th><label for="id_game_master">Game master:</label></th><td><a href='/user_profile/{{ hero.game_master.id }}'>{{ hero.game_master.username }}</a></td></tr>
+                <tr><th><label for="id_player">Player:</label></th><td><a href='/user-profile/{{ hero.user.id }}'>{{ hero.user.username }}</a></td></tr>
+                <tr><th><label for="id_game_master">Game master:</label></th><td><a href='/user-profile/{{ hero.game_master.id }}'>{{ hero.game_master.username }}</a></td></tr>
+                <tr><th><label for="id_experience">Experience:</label></th><td>{{ hero.experience }}</td></tr>
             </form>
         </table>
     </div>
