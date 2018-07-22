@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
@@ -83,3 +85,9 @@ class Hero(models.Model):
     experience = models.SmallIntegerField(default=0)
     portrait = models.SmallIntegerField([MinValueValidator(1), MaxValueValidator(8)], blank=True, null=True)
 
+
+class News(models.Model):
+    content = models.TextField(null=True)
+    date_added = models.DateTimeField(default=datetime.now, blank=True)
+    added_by = models.ForeignKey(User, related_name='added_by', on_delete=models.CASCADE)
+    category = models.CharField(max_length=32, blank=True, null=True)

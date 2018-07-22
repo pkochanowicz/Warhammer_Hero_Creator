@@ -57,6 +57,9 @@ body {
 .centered {
     text-align: center;
 }
+.align-right {
+    float: right;
+}
 .align-left{
     text-align: left;
 }

@@ -15,7 +15,8 @@
     <ul>
     {% for hero in user_heroes%}
         <div class="align-left">
-            <li><a href='/warhammer/hero/{{ hero.id }}'><strong>{{ hero.name }}</strong></a> - {{ hero.race.capitalize }} {{ hero.current_career.capitalize }}
+            <li><a href='/warhammer/hero/{{ hero.id }}'><strong> {{ hero.name }}</strong></a> - {{ hero.race.capitalize }} {{ hero.current_career.capitalize }} -----
+                <a href='/warhammer/hero/delete/{{ hero.id }}'><strong>Delete</strong></a>
         </div>
         {% endfor %}
     </ul>
