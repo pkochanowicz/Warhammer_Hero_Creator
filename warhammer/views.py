@@ -295,6 +295,7 @@ class AddUserView(View):
 class MainSiteView(View):
     def get(self, request):
         news = News.objects.all()
+        news = news.order_by('-date_added')
         return render(request, 'main_site.html', {'news': news})
 
 
