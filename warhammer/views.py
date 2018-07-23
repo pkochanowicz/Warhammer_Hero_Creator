@@ -7,8 +7,8 @@ from django.views.generic.base import View
 
 from warhammer.forms import HeroCreationCharacterForm, HeroCreationPersonalDetailsForm, \
     HeroCreationCharacterProfileForm, UserLoginForm, AddUserForm, HeroSearchForm, GameMasterEditForm, \
-    AssignExperienceForm
-from warhammer.models import Hero
+    AssignExperienceForm, AddNewsForm
+from warhammer.models import Hero, News
 
 
 class HeroCreationView(View):
@@ -294,4 +294,99 @@ class AddUserView(View):
 
 class MainSiteView(View):
     def get(self, request):
-        return render(request, 'main_site.html', {})
+        news = News.objects.all()
+        return render(request, 'main_site.html', {'news': news})
+
+
+class AddNewsView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        if request.user.is_superuser:
+            news_form = AddNewsForm
+            return render(request, 'add_news.html', {'form': news_form})
+        else:
+            return render(request, 'access_denied.html', {})
+
+    @method_decorator(login_required)
+    def post(self, request):
+        if request.user.is_superuser:
+
+            news_form = AddNewsForm(request.POST, request.FILES)
+            if news_form.is_valid():
+                title = news_form.cleaned_data['title']
+                content = news_form.cleaned_data['content']
+                try:
+                    if request.FILES['picture']:
+                        new_news = News.objects.create(
+                            title=title,
+                            content=content,
+                            added_by=request.user,
+                            picture=request.FILES['picture'])
+                        new_news.save()
+                except KeyError:
+                    new_news = News.objects.create(
+                        title=title,
+                        content=content,
+                        added_by=request.user,)
+                    new_news.save()
+                return redirect("/")
+            else:
+                error_message = str("Wrong data. The news hasn't been created.")
+                return render(request, 'add_news.html', {'news_form': news_form,
+                                                         'error_message': error_message})
+        else:
+            return render(request, 'access_denied.html', {})
+
+
+class DeleteNewsView(View):
+    @method_decorator(login_required)
+    def get(self, request, news_id):
+        current_user = request.user
+        news = News.objects.get(id=news_id)
+        if current_user.is_superuser:
+            news.delete()
+            return redirect("/")
+        else:
+            return render(request, 'access_denied.html', {})
+
+
+class EditNewsView(View):
+    @method_decorator(login_required)
+    def get(self, request, news_id):
+        if request.user.is_superuser:
+            news_form = AddNewsForm
+            news_to_edit = News.objects.get(id=news_id)
+            return render(request, 'edit_news.html', {'form': news_form,
+                                                     'news': news_to_edit})
+        else:
+            return render(request, 'access_denied.html', {})
+
+    @method_decorator(login_required)
+    def post(self, request, news_id):
+        if request.user.is_superuser:
+
+            news_form = AddNewsForm(request.POST, request.FILES)
+            if news_form.is_valid():
+                title = news_form.cleaned_data['title']
+                content = news_form.cleaned_data['content']
+                news_to_edit = News.objects.get(id=news_id)
+                try:
+                    if request.FILES['picture']:
+                        news_to_edit.title = title
+                        news_to_edit.content = content
+                        news_to_edit.added_by = request.user
+                        news_to_edit.picture = request.FILES['picture']
+                        news_to_edit.save()
+                except KeyError:
+                    news_to_edit.title = title
+                    news_to_edit.content = content
+                    news_to_edit.added_by = request.user
+                    news_to_edit.save()
+                return redirect("/")
+            else:
+                error_message = str("Wrong data. The news hasn't been changed.")
+                return render(request, 'add_news.html', {'news_form': news_form,
+                                                         'error_message': error_message})
+        else:
+            return render(request, 'access_denied.html', {})
+

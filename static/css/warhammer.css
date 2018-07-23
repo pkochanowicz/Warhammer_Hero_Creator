@@ -1,7 +1,7 @@
 a {
     color: #a2160d;
 }
-input, textarea {
+input{
     width: 130px;
     background-color: #d1d1d1;
     cursor: pointer;
@@ -21,6 +21,18 @@ body {
 }
 #content h3 {
     margin-bottom: 1em;
+}
+.news {
+    border: 3px solid saddlebrown;
+    margin-bottom: 2em;
+    padding: 5px;
+}
+.news-picture img{
+    width: 100%;
+    max-width: 100%;
+    height: 13em;
+    padding: 3px;
+    padding-top: 10px;
 }
 .logo{
     background-image: url('/static/pictures/logo.gif');

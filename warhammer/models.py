@@ -87,7 +87,10 @@ class Hero(models.Model):
 
 
 class News(models.Model):
+    title = models.CharField(max_length=32, default="News")
     content = models.TextField(null=True)
     date_added = models.DateTimeField(default=datetime.now, blank=True)
     added_by = models.ForeignKey(User, related_name='added_by', on_delete=models.CASCADE)
     category = models.CharField(max_length=32, blank=True, null=True)
+    picture = models.ImageField(upload_to='news/%Y/%m/%d', default='news/default.jpg',
+                                blank=True, null=True)

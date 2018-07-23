@@ -149,3 +149,9 @@ class AddUserForm(forms.Form):
     first_name = forms.CharField(label='First name', required=False)
     last_name = forms.CharField(label='Last name', required=False)
     email = forms.CharField(label='E-mail', validators=[validate_email])
+
+
+class AddNewsForm(forms.Form):
+    title = forms.CharField(label='News title', max_length=32)
+    content = forms.CharField(label='Content:', widget=forms.Textarea)
+    picture = forms.ImageField(label='Picture', required=False)

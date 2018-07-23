@@ -18,12 +18,16 @@
             <a href='/' class="btn btn-default" role="button">Main site</a>
             <a href='/warhammer/hero-creation/' class="btn btn-default">Create a hero</a>
             <a href='/warhammer/heroes/' class="btn btn-default">Your characters</a>
-            <a href='/user-profile/{{ user.id }}' class="btn btn-default"
-            {% if user.id == None %}disabled="disabled" {% endif %}>Your profile</a>
-            <a href='/user-login/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %} >Login</a>
-            <a href='/add-user/' class="btn btn-default" {% if user.id != None %}disabled="disabled"{% endif %}>Register</a>
-            <a href='/user-logout/' class="btn btn-default"
-            {% if user.id == None %}disabled="disabled" {% endif %}>Logout</a>
+            {% if user.id != None %}<a href='/user-profile/{{ user.id }}' class="btn btn-default">
+                Your profile</a>
+            {% endif %}
+            {% if user.id == None %}
+                <a href='/user-login/' class="btn btn-default">Login</a>
+                <a href='/add-user/' class="btn btn-default">Register</a>
+            {% endif %}
+            {% if user.id != None %}
+                <a href='/user-logout/' class="btn btn-default">Logout</a>
+            {% endif %}
         </div>
     </div>
     </br>

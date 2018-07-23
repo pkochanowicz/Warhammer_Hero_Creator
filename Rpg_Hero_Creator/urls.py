@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from warhammer.views import HeroCreationView, HeroView, UserLoginView, AddUserView, UserProfileView, UserLogoutView, HeroesSearchAndView, \
-    MainSiteView, HeroDeleteView, AssignExperienceView
+from Rpg_Hero_Creator import settings
+from warhammer.views import HeroCreationView, HeroView, UserLoginView, AddUserView, UserProfileView, UserLogoutView, \
+    HeroesSearchAndView, \
+    MainSiteView, HeroDeleteView, AssignExperienceView, AddNewsView, DeleteNewsView, EditNewsView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,8 +32,14 @@ urlpatterns = [
     url(r'^warhammer/hero/delete/(?P<hero_id>(\d+))$', HeroDeleteView.as_view(), name='warhammer-hero-delete'),
     url(r'^warhammer/assign-experience/', AssignExperienceView.as_view(), name='warhammer-assign-experience'),
 
+    url(r'^warhammer/add-news/', AddNewsView.as_view(), name='warhammer-add-news'),
+    url(r'^warhammer/delete-news/(?P<news_id>(\d+))$', DeleteNewsView.as_view(), name='warhammer-news-delete'),
+    url(r'^warhammer/edit-news/(?P<news_id>(\d+))$', EditNewsView.as_view(), name='warhammer-news-edit'),
+
     url(r'^user-profile/(?P<user_id>(\d+))$', UserProfileView.as_view(), name='user-profile'),
     url(r'^user-login/', UserLoginView.as_view(), name='user-login'),
     url(r'^user-logout/', UserLogoutView.as_view(), name='user-logout'),
     url(r'^add-user/', AddUserView.as_view(), name='add-user'),
 ]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
