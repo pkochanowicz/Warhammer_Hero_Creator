@@ -3,3 +3,5 @@ A popular RPG game online hero creator. I have used Django for html templates, f
 and javascript to make dynamic calculations translated from official Warhammer manual. I’m still working on functionalities and I
 would like this project to once become a platform on which players could play sessions online. Next steps will be adding
 bestiary and game master panel.
+
+The application is made with Python(Django) and Javascript, using also HTML, CSS and Bootstrap.
